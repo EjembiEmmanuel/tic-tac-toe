@@ -1,11 +1,23 @@
 "use strict";
 
 
+const Player = (name, letter) => {
+
+    const getName = () => {
+        return name
+    }
+
+    const getLetter = () => {
+        return letter
+    }
+
+    return {name, letter}
+}
+
+
 const Gameboard = (function() {
     let gameboard = [
-        "x", "o", "x",
-        "o", "x", "o",
-        "x", "o", "x"    
+            
     ]
 
     return {
@@ -26,13 +38,20 @@ const DisplayController = (function(doc, board) {
         return board.gameboard
     }
 
-    const displayContent = (selector, content) => {
-        content = getContent()
-        selector = getElement()
+    const displayContent = (selectors, content) => {
+        const oche = Player("Oche", "X")
 
-        for(let i = 0; i < selector.length; i++) {
-            selector[i].innerText = content[i]
-        }
+        content = getContent()
+        selectors = getElement()
+
+        selectors.forEach(btn => btn.addEventListener('click', function() {
+            const index = Array.from(selectors).indexOf(btn);
+
+            if(btn.innerText === "") {
+                btn.innerText = oche.letter
+                content.push(btn.innerText)
+            }
+        }));
     }
 
     const displayBoard = () => {
@@ -44,19 +63,6 @@ const DisplayController = (function(doc, board) {
     }
 }(document, Gameboard))
 
-
-const Player = (name, letter) => {
-
-    const getName = () => {
-        return name
-    }
-
-    const getLetter = () => {
-        return letter
-    }
-
-    return {name, letter}
-}
 
 
 DisplayController.displayBoard()
