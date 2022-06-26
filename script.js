@@ -33,4 +33,18 @@ const DisplayController = (function(doc, board) {
 }(document, Gameboard))
 
 
+const Player = (name, letter) => {
+
+    const getName = () => {
+        return name
+    }
+
+    const getLetter = () => {
+        return letter
+    }
+
+    return {name, letter}
+}
+
+
 DisplayController.displayBoard()
