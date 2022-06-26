@@ -2,7 +2,11 @@
 
 
 const Gameboard = (function() {
-    let gameboard = ["x", "o", "x"]
+    let gameboard = [
+        "x", "o", "x",
+        "o", "x", "o",
+        "x", "o", "x"    
+    ]
 
     return {
         gameboard,
@@ -13,18 +17,26 @@ const Gameboard = (function() {
 const DisplayController = (function(doc, board) {
 
     const getElement = () => {
-        return doc.getElementsByTagName("body")[0]
+        let element = doc.querySelectorAll(".board-item")
+
+        return element
     }
 
     const getContent = () => {
         return board.gameboard
     }
 
-    const displayBoard = (selector, content) => {
+    const displayContent = (selector, content) => {
         content = getContent()
         selector = getElement()
 
-        selector.innerHTML = content
+        for(let i = 0; i < selector.length; i++) {
+            selector[i].innerText = content[i]
+        }
+    }
+
+    const displayBoard = () => {
+        displayContent()
     }
 
     return {

@@ -56,13 +56,13 @@ body {
     /* padding-bottom: 20px; */
 }
 
-.container .board .board-item {
+.container .board .board-items {
     background-color: bisque;
     font-size: 30px;
     text-align: center;
 }
 
-.container .board .board-item button {
+.container .board .board-items button {
     background-color: bisque;
     width: 100%;
     height: 100%;
