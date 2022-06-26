@@ -1,0 +1,80 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    background-color: rgb(14, 68, 94);
+    width: 50vw;
+    /* height: 50vh; */
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 5px;
+
+}
+
+.container .header {
+    width: 100%;
+    align-content: flex-start;
+    padding-left: 15px;
+    padding-top: 10px;
+}
+
+.container .letter {
+    display: flex;
+    flex-direction: row;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.container .letter button {
+    background-color: gold;
+    width: 100px;
+    height: 100px;
+    margin: 15px;
+    font-size: 32px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.container .letter button:hover {
+    background-color: rgb(255, 236, 126);
+    transition: 0.5s;
+}
+
+.container .board {
+    background-color: rgb(14, 68, 94);
+    display: grid;
+    gap: 10px 10px;
+    grid-template-columns: auto auto auto;
+    width: 50%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.container .board .board-item {
+    background-color: bisque;
+    /* border: 1px solid black; */
+    padding: 40px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.container .footer button {
+    background-color: gold;
+    width: 200px;
+    height: 50px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.container .footer button:hover {
+    background-color: rgb(255, 236, 126);
+    transition: 0.5s;
+}
