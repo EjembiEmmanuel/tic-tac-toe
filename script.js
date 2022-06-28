@@ -202,26 +202,13 @@ const GameOver = (function(board) {
 
 
 const DisplayController = (function(doc, board, game) {
-
-
-    const getElement = () => {
-        let element = doc.querySelectorAll(".board-item")
-
-        return element
-    }
-
-    const getContent = () => {
-        return board.gameboard
-    }
-
     
-
     const displayContent = () => {
     
         const {player1, player2} = GetPlayer()
 
-        let content = getContent()
-        let selectors = getElement()
+        let content = board.gameboard
+        let selectors = doc.querySelectorAll(".board-item")
 
         selectors.forEach(btn => btn.addEventListener('click', function() {
             const index = Array.from(selectors).indexOf(btn);
