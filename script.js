@@ -83,8 +83,10 @@ const DisplayController = (function(doc, board) {
         const {player1, player2} = GetPlayer()
 
         content = getContent()
-        
+
         let outcome
+
+        let gameWon = false
         
         if(content.length > 1) {
 
@@ -97,6 +99,8 @@ const DisplayController = (function(doc, board) {
                     } else {
                         console.log(`${player2.name} wins`)
                     }
+
+                    gameWon = true
                 }
             } 
             
@@ -109,6 +113,8 @@ const DisplayController = (function(doc, board) {
                     } else {
                         console.log(`${player2.name} wins`)
                     }
+
+                    gameWon = true
                 }
             } 
 
@@ -121,6 +127,8 @@ const DisplayController = (function(doc, board) {
                     } else {
                         console.log(`${player2.name} wins`)
                     }
+
+                    gameWon = true
                 }
             } 
             
@@ -133,6 +141,8 @@ const DisplayController = (function(doc, board) {
                     } else {
                         console.log(`${player2.name} wins`)
                     }
+
+                    gameWon = true
                 }
             } 
             
@@ -145,6 +155,8 @@ const DisplayController = (function(doc, board) {
                     } else {
                         console.log(`${player2.name} wins`)
                     }
+
+                    gameWon = true
                     
                 }
             } 
@@ -158,6 +170,8 @@ const DisplayController = (function(doc, board) {
                     } else {
                         console.log(`${player2.name} wins`)
                     }
+
+                    gameWon = true
                 }
             } 
             
@@ -170,6 +184,8 @@ const DisplayController = (function(doc, board) {
                     } else {
                         console.log(`${player2.name} wins`)
                     }
+
+                    gameWon = true
                 }
             } 
             
@@ -182,7 +198,13 @@ const DisplayController = (function(doc, board) {
                     } else {
                         console.log(`${player2.name} wins`)
                     }
+
+                    gameWon = true
                 }
+            }
+
+            if(!content.includes("") && gameWon === false) {
+                console.log("It's a tie")
             }
         }
     }
