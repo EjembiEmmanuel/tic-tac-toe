@@ -52,8 +52,156 @@ const Gameboard = (function() {
 }())
 
 
+const GameOver = (function(board) {
+    const {player1, player2} = GetPlayer()
 
-const DisplayController = (function(doc, board) {
+    let content = board.gameboard
+
+    let outcome
+
+    let gameWon = false
+
+    const checkForThree = (a, b, c) => {
+        let isWon 
+    
+        if(a === b && b === c) {
+            isWon = true
+        } else {
+            isWon = false
+        }
+    
+        return isWon
+    }
+
+    const gameOver = () => {
+        if(content.length > 1) {
+
+            if(content[0] !== "" && content[1] !== "" && content[2] !== "") {
+                outcome = checkForThree(content[0], content[1], content[2])
+    
+                if(outcome) {
+                    if(player1.letter == content[0]) {
+                        console.log(`${player1.name} wins`)
+                    } else {
+                        console.log(`${player2.name} wins`)
+                    }
+    
+                    gameWon = true
+                }
+            } 
+            
+            if(content[3] !== "" && content[4] !== "" && content[5] !== "") {
+                outcome = checkForThree(content[3], content[4], content[5])
+    
+                if(outcome) {
+                    if(player1.letter == content[3]) {
+                        console.log(`${player1.name} wins`)
+                    } else {
+                        console.log(`${player2.name} wins`)
+                    }
+    
+                    gameWon = true
+                }
+            } 
+    
+            if(content[6] !== "" && content[7] !== "" && content[8] !== "") {
+                outcome = checkForThree(content[6], content[7], content[8])
+    
+                if(outcome) {
+                    if(player1.letter == content[6]) {
+                        console.log(`${player1.name} wins`)
+                    } else {
+                        console.log(`${player2.name} wins`)
+                    }
+    
+                    gameWon = true
+                }
+            } 
+            
+            if(content[0] !== "" && content[3] !== "" && content[6] !== "") {
+                outcome = checkForThree(content[0], content[3], content[6])
+    
+                if(outcome) {
+                    if(player1.letter == content[0]) {
+                        console.log(`${player1.name} wins`)
+                    } else {
+                        console.log(`${player2.name} wins`)
+                    }
+    
+                    gameWon = true
+                }
+            } 
+            
+            if(content[1] !== "" && content[4] !== "" && content[7] !== "") {
+                outcome = checkForThree(content[1], content[4], content[7])
+    
+                if(outcome) {
+                    if(player1.letter == content[1]) {
+                        console.log(`${player1.name} wins`)
+                    } else {
+                        console.log(`${player2.name} wins`)
+                    }
+    
+                    gameWon = true
+                    
+                }
+            } 
+            
+            if(content[2] !== "" && content[5] !== "" && content[8] !== "") {
+                outcome = checkForThree(content[2], content[5], content[8])
+    
+                if(outcome) {
+                    if(player1.letter == content[2]) {
+                        console.log(`${player1.name} wins`)
+                    } else {
+                        console.log(`${player2.name} wins`)
+                    }
+    
+                    gameWon = true
+                }
+            } 
+            
+            if(content[0] !== "" && content[4] !== "" && content[8] !== "") {
+                outcome = checkForThree(content[0], content[4], content[8])
+    
+                if(outcome) {
+                    if(player1.letter == content[0]) {
+                        console.log(`${player1.name} wins`)
+                    } else {
+                        console.log(`${player2.name} wins`)
+                    }
+    
+                    gameWon = true
+                }
+            } 
+            
+            if(content[2] !== "" && content[4] !== "" && content[6] !== "") {
+                outcome = checkForThree(content[2], content[4], content[6])
+    
+                if(outcome) {
+                    if(player1.letter == content[2]) {
+                        console.log(`${player1.name} wins`)
+                    } else {
+                        console.log(`${player2.name} wins`)
+                    }
+    
+                    gameWon = true
+                }
+            }
+    
+            if(!content.includes("") && gameWon === false) {
+                console.log("It's a tie")
+            }
+        }
+    }
+
+    return {
+        gameOver,
+    }
+}(Gameboard))
+
+
+const DisplayController = (function(doc, board, game) {
 
 
     const getElement = () => {
@@ -66,155 +214,14 @@ const DisplayController = (function(doc, board) {
         return board.gameboard
     }
 
+    
 
-    const checkForThree = (a, b, c) => {
-        let isWon 
-
-        if(a === b && b === c) {
-            isWon = true
-        } else {
-            isWon = false
-        }
-
-        return isWon
-    }
-
-    const gameOver = (content) => {
-        const {player1, player2} = GetPlayer()
-
-        content = getContent()
-
-        let outcome
-
-        let gameWon = false
-        
-        if(content.length > 1) {
-
-            if(content[0] !== "" && content[1] !== "" && content[2] !== "") {
-                outcome = checkForThree(content[0], content[1], content[2])
-
-                if(outcome) {
-                    if(player1.letter == content[0]) {
-                        console.log(`${player1.name} wins`)
-                    } else {
-                        console.log(`${player2.name} wins`)
-                    }
-
-                    gameWon = true
-                }
-            } 
-            
-            if(content[3] !== "" && content[4] !== "" && content[5] !== "") {
-                outcome = checkForThree(content[3], content[4], content[5])
-
-                if(outcome) {
-                    if(player1.letter == content[3]) {
-                        console.log(`${player1.name} wins`)
-                    } else {
-                        console.log(`${player2.name} wins`)
-                    }
-
-                    gameWon = true
-                }
-            } 
-
-            if(content[6] !== "" && content[7] !== "" && content[8] !== "") {
-                outcome = checkForThree(content[6], content[7], content[8])
-
-                if(outcome) {
-                    if(player1.letter == content[6]) {
-                        console.log(`${player1.name} wins`)
-                    } else {
-                        console.log(`${player2.name} wins`)
-                    }
-
-                    gameWon = true
-                }
-            } 
-            
-            if(content[0] !== "" && content[3] !== "" && content[6] !== "") {
-                outcome = checkForThree(content[0], content[3], content[6])
-
-                if(outcome) {
-                    if(player1.letter == content[0]) {
-                        console.log(`${player1.name} wins`)
-                    } else {
-                        console.log(`${player2.name} wins`)
-                    }
-
-                    gameWon = true
-                }
-            } 
-            
-            if(content[1] !== "" && content[4] !== "" && content[7] !== "") {
-                outcome = checkForThree(content[1], content[4], content[7])
-
-                if(outcome) {
-                    if(player1.letter == content[1]) {
-                        console.log(`${player1.name} wins`)
-                    } else {
-                        console.log(`${player2.name} wins`)
-                    }
-
-                    gameWon = true
-                    
-                }
-            } 
-            
-            if(content[2] !== "" && content[5] !== "" && content[8] !== "") {
-                outcome = checkForThree(content[2], content[5], content[8])
-
-                if(outcome) {
-                    if(player1.letter == content[2]) {
-                        console.log(`${player1.name} wins`)
-                    } else {
-                        console.log(`${player2.name} wins`)
-                    }
-
-                    gameWon = true
-                }
-            } 
-            
-            if(content[0] !== "" && content[4] !== "" && content[8] !== "") {
-                outcome = checkForThree(content[0], content[4], content[8])
-
-                if(outcome) {
-                    if(player1.letter == content[0]) {
-                        console.log(`${player1.name} wins`)
-                    } else {
-                        console.log(`${player2.name} wins`)
-                    }
-
-                    gameWon = true
-                }
-            } 
-            
-            if(content[2] !== "" && content[4] !== "" && content[6] !== "") {
-                outcome = checkForThree(content[2], content[4], content[6])
-
-                if(outcome) {
-                    if(player1.letter == content[2]) {
-                        console.log(`${player1.name} wins`)
-                    } else {
-                        console.log(`${player2.name} wins`)
-                    }
-
-                    gameWon = true
-                }
-            }
-
-            if(!content.includes("") && gameWon === false) {
-                console.log("It's a tie")
-            }
-        }
-    }
-
-    const displayContent = (selectors, content) => {
+    const displayContent = () => {
     
         const {player1, player2} = GetPlayer()
 
-        content = getContent()
-        selectors = getElement()
+        let content = getContent()
+        let selectors = getElement()
 
         selectors.forEach(btn => btn.addEventListener('click', function() {
             const index = Array.from(selectors).indexOf(btn);
@@ -225,7 +232,7 @@ const DisplayController = (function(doc, board) {
                 btn.innerText = player.letter
                 content[index] = player.letter
 
-                gameOver()
+                game.gameOver()
             }
         }));
     }
@@ -238,7 +245,7 @@ const DisplayController = (function(doc, board) {
     return {
         displayBoard,
     }
-}(document, Gameboard))
+}(document, Gameboard, GameOver))
 
 
 
