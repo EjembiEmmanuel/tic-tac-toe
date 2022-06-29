@@ -52,7 +52,7 @@ const Gameboard = (function() {
 }())
 
 
-const GameOver = (function(board) {
+const GameOver = (function(board, doc) {
     const {player1, player2} = GetPlayer()
 
     let content = board.gameboard
@@ -60,6 +60,11 @@ const GameOver = (function(board) {
     let outcome
 
     let gameWon = false
+
+    let winner = null
+
+    let gameOverElement = doc.querySelector(".game-over")
+    let gameOverTextElement = gameOverElement.children[0]
 
     const checkForThree = (a, b, c) => {
         let isWon 
@@ -81,9 +86,9 @@ const GameOver = (function(board) {
     
                 if(outcome) {
                     if(player1.letter == content[0]) {
-                        console.log(`${player1.name} wins`)
+                        winner = player1
                     } else {
-                        console.log(`${player2.name} wins`)
+                        winner = player2
                     }
     
                     gameWon = true
@@ -95,9 +100,9 @@ const GameOver = (function(board) {
     
                 if(outcome) {
                     if(player1.letter == content[3]) {
-                        console.log(`${player1.name} wins`)
+                        winner = player1
                     } else {
-                        console.log(`${player2.name} wins`)
+                        winner = player2
                     }
     
                     gameWon = true
@@ -109,9 +114,9 @@ const GameOver = (function(board) {
     
                 if(outcome) {
                     if(player1.letter == content[6]) {
-                        console.log(`${player1.name} wins`)
+                        winner = player1
                     } else {
-                        console.log(`${player2.name} wins`)
+                        winner = player2
                     }
     
                     gameWon = true
@@ -123,9 +128,9 @@ const GameOver = (function(board) {
     
                 if(outcome) {
                     if(player1.letter == content[0]) {
-                        console.log(`${player1.name} wins`)
+                        winner = player1
                     } else {
-                        console.log(`${player2.name} wins`)
+                        winner = player2
                     }
     
                     gameWon = true
@@ -137,9 +142,9 @@ const GameOver = (function(board) {
     
                 if(outcome) {
                     if(player1.letter == content[1]) {
-                        console.log(`${player1.name} wins`)
+                        winner = player1
                     } else {
-                        console.log(`${player2.name} wins`)
+                        winner = player2
                     }
     
                     gameWon = true
@@ -152,9 +157,9 @@ const GameOver = (function(board) {
     
                 if(outcome) {
                     if(player1.letter == content[2]) {
-                        console.log(`${player1.name} wins`)
+                        winner = player1
                     } else {
-                        console.log(`${player2.name} wins`)
+                        winner = player2
                     }
     
                     gameWon = true
@@ -166,9 +171,9 @@ const GameOver = (function(board) {
     
                 if(outcome) {
                     if(player1.letter == content[0]) {
-                        console.log(`${player1.name} wins`)
+                        winner = player1
                     } else {
-                        console.log(`${player2.name} wins`)
+                        winner = player2
                     }
     
                     gameWon = true
@@ -180,17 +185,23 @@ const GameOver = (function(board) {
     
                 if(outcome) {
                     if(player1.letter == content[2]) {
-                        console.log(`${player1.name} wins`)
+                        winner = player1
                     } else {
-                        console.log(`${player2.name} wins`)
+                        winner = player2
                     }
     
                     gameWon = true
                 }
             }
+
+            if(gameWon) {
+                gameOverTextElement.textContent = `${winner.name} wins!`
+                gameOverElement.style.removeProperty('visibility')
+            }
     
             if(!content.includes("") && gameWon === false) {
-                console.log("It's a tie")
+                gameOverTextElement.textContent = "It's a tie"
+                gameOverElement.style.removeProperty('visibility')
             }
         }
     }
@@ -198,7 +209,7 @@ const GameOver = (function(board) {
     return {
         gameOver,
     }
-}(Gameboard))
+}(Gameboard, document))
 
 
 const DisplayController = (function(doc, board, game) {
