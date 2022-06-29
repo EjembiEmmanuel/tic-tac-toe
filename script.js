@@ -197,11 +197,13 @@ const GameOver = (function(board, doc) {
             if(gameWon) {
                 gameOverTextElement.textContent = `${winner.name} wins!`
                 gameOverElement.style.removeProperty('visibility')
+                gameOverTextElement.classList.add('game-over-text')
             }
     
             if(!content.includes("") && gameWon === false) {
                 gameOverTextElement.textContent = "It's a tie"
                 gameOverElement.style.removeProperty('visibility')
+                gameOverTextElement.classList.add('game-over-text')
             }
         }
     }

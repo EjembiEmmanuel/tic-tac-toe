@@ -5,18 +5,40 @@ body {
     align-items: center;
 }
 
+@keyframes gameOverAnimation {
+    0% {
+      color: black;
+      margin-bottom: -40px;
+    }
+    30% {
+      letter-spacing: 25px;
+      margin-bottom: -40px;
+    }
+    85% {
+      letter-spacing: 8px;
+      margin-bottom: -40px;
+    }
+}
+
+
 .game-over {
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 48px;
     top: 40%;
     left: 50%;
     transform: translate(-50%,-50%);
     width: 100%;
     height: 100vh;
     backdrop-filter: blur(5px);
+}
+
+.game-over-text {
+    color: black;
+    font-size: 48px;
+    animation: gameOverAnimation 3s 1;
+    position: relative;
 }
 
 .container {
