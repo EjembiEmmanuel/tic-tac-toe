@@ -204,12 +204,20 @@ const StartGame = () => {
                     gameOverTextElement.textContent = `${winner.name} wins!`
                     gameOverElement.style.removeProperty('visibility')
                     gameOverTextElement.classList.add('game-over-text')
+
+                    gameOverElement.addEventListener('click', function() {
+                        location.reload()
+                    })
                 }
         
                 if(!content.includes("") && gameWon === false) {
                     gameOverTextElement.textContent = "It's a tie"
                     gameOverElement.style.removeProperty('visibility')
                     gameOverTextElement.classList.add('game-over-text')
+
+                    gameOverElement.addEventListener('click', function() {
+                        location.reload()
+                    })
                 }
             }
         }
