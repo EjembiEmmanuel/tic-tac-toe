@@ -30,7 +30,7 @@ body {
     left: 50%;
     transform: translate(-50%,-50%);
     width: 100%;
-    height: 100vh;
+    min-height: 1000px;
     backdrop-filter: blur(5px);
 }
 
@@ -43,12 +43,12 @@ body {
 
 .container {
     background-color: rgb(14, 68, 94);
-    width: 50vw;
-    /* min-width: 50vw; */
+    min-width: 50vw;
     display: flex;
     flex: 1;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     border: 1px solid black;
     border-radius: 5px;
 
@@ -94,14 +94,12 @@ body {
 .container .letter {
     display: flex;
     flex-direction: row;
-    padding-top: 20px;
-    padding-bottom: 20px;
 }
 
 .container .letter button {
     background-color: gold;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     margin: 15px;
     font-size: 32px;
     border: 2px solid black;
@@ -116,17 +114,15 @@ body {
 .container .board {
     background-color: rgb(14, 68, 94);
     display: grid;
-    /* gap: 5px 5px; */
     grid-template-columns: auto auto auto;
-    width: 50%;
-    padding: 20px;
-    /* padding-bottom: 20px; */
 }
 
 .container .board .board-items {
     background-color: bisque;
     font-size: 30px;
     text-align: center;
+    width: 130px;
+    height: 100px;
 }
 
 .container .board .board-items button {
@@ -134,7 +130,6 @@ body {
     width: 100%;
     height: 100%;
     font-size: 30px;
-    padding: 50px;
 }
 
 .container .footer button {
@@ -142,6 +137,7 @@ body {
     width: 200px;
     height: 50px;
     font-size: 18px;
+    margin-top: 10px;
     margin-bottom: 10px;
     border: 2px solid black;
     border-radius: 5px;
