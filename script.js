@@ -44,19 +44,20 @@ const StartGame = () => {
     }())
 
     let currentPlayer
-    let played = false
+    let playing = true
+
     const GetPlayerTurn = (player1, player2) => {
     
-    if(player1.letter === "X" && !played) {
-        currentPlayer = player1
-        played = true
-    } else {
-        currentPlayer = player2
-        played = false
-    }
+        if(player1.letter === "X" && playing) {
+            currentPlayer = player1
+            playing = false
+        } else {
+            currentPlayer = player2
+            playing = true
+        }
 
-    return currentPlayer
-}
+        return currentPlayer
+    }
 
     const GameOver = (function(board, doc) {
         const {player1, player2} = GetPlayerDetails()
