@@ -221,6 +221,8 @@ const StartGame = () => {
                     })
                 }
             }
+
+            return gameWon
         }
     
         return {
@@ -228,27 +230,66 @@ const StartGame = () => {
         }
     }(Gameboard, document))
 
-    const DisplayController = (function(doc, board, game) {
-    
-        const displayContent = () => {
-        
-            const {player1, player2} = GetPlayerDetails()
-    
-            let content = board.gameboard
+    const MakeMove = (function(doc, board, game) {
+
+        const {player1, player2} = GetPlayerDetails()
+
+        let content = board.gameboard
+
+        const ai = (spots) => {
+
+            console.log(spots)
+
+            for(let i = 0; i < spots.length; i++) {
+                if(content[i] === "") {
+                    content[i] = "O"
+                    return i
+                }
+            }
+
+        }
+
+        const play = () => {
+
             let selectors = doc.querySelectorAll(".board-item")
-    
+
             selectors.forEach(btn => btn.addEventListener('click', function() {
                 const index = Array.from(selectors).indexOf(btn);
-    
+
                 let player = GetPlayerTurn(player1, player2)
-    
-                if(btn.innerText === "") {
-                    btn.innerText = player.letter
-                    content[index] = player.letter
-    
-                    game.gameOver()
+
+                if(btn.innerText === "" && content[index] === "") {
+                        btn.innerText = player.letter
+                        content[index] = player.letter
+
+                        player = GetPlayerTurn(player1, player2)
+
+                        let aiChoice = ai(content)
+                        aiChoice
+
+                        selectors[aiChoice].innerText = player.letter
+        
+                        game.gameOver()
+                        btn.removeEventListener('click', function() {
+                        })
+                } else {
+                    player = GetPlayerTurn(player1, player2)
                 }
+
             }));
+
+        }
+
+        return {
+            play
+        }
+
+    }(document, Gameboard, GameOver))
+
+    const DisplayController = (function(doc, board, game, move) {
+    
+        const displayContent = () => {
+            move.play()
         }
     
         
@@ -259,7 +300,7 @@ const StartGame = () => {
         return {
             displayBoard,
         }
-    }(document, Gameboard, GameOver))
+    }(document, Gameboard, GameOver, MakeMove))
 
     DisplayController.displayBoard()
 }
