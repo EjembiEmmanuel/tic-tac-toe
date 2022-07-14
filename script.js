@@ -41,7 +41,21 @@ const MakeMove = (function(doc, gameBoard, winning) {
     const restartButton = doc.getElementById('restart-button')
     let circleTurn
 
+    const openSpots = () => {
+        let open = []
+
+        for(let i = 0; i < gameBoard.gameboard.length; i++) {
+            if(gameBoard.gameboard[i] == "") {
+                open.push(i)
+            }
+        }
+
+        return open
+    }
+
     const placeMarker = (cell, currentPlayer) => {
+        
+        
         cell.classList.add(currentPlayer)
 
         const index = cell.dataset.key
@@ -67,6 +81,8 @@ const MakeMove = (function(doc, gameBoard, winning) {
         const cell = e.target
         const currentPlayer = circleTurn ? PLAYER_O : PLAYER_X
         placeMarker(cell, currentPlayer)
+
+        openSpots()
 
         if(checkWinner(currentPlayer)) {
             endGame(false)
