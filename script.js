@@ -39,50 +39,172 @@ const MakeMove = (function(doc, gameBoard, winning) {
     const winningMessageElement = doc.getElementById('winning-message')
     const winningMessageTextElement = doc.querySelector('[data-winning-message-text]')
     const restartButton = doc.getElementById('restart-button')
-    let circleTurn
+    let xTurn
 
-    const openSpots = () => {
-        let open = []
+    // const openSpots = () => {
+    //     let open = []
 
-        for(let i = 0; i < gameBoard.gameboard.length; i++) {
-            if(gameBoard.gameboard[i] == "") {
-                open.push(i)
+    //     for(let i = 0; i < gameBoard.gameboard.length; i++) {
+    //         if(gameBoard.gameboard[i] == "") {
+    //             open.push(i)
+    //         }
+    //     }
+
+    //     return open
+    // }
+
+    const checkForThree = (a, b, c) => {
+        return a == b && b == c && a != ''
+    }
+
+    const boardWinner = () => {
+        let winner = null
+
+        let board = gameBoard.gameboard
+
+        if(checkForThree(board[0], board[1], board[2])) {
+            winner = board[0]
+        }
+
+        if(checkForThree(board[3], board[4], board[5])) {
+            winner = board[3]
+        }
+
+        if(checkForThree(board[6], board[7], board[8])) {
+            winner = board[6]
+        }
+
+        if(checkForThree(board[0], board[3], board[6])) {
+            winner = board[0]
+        }
+
+        if(checkForThree(board[1], board[4], board[7])) {
+            winner = board[1]
+        }
+
+        if(checkForThree(board[2], board[5], board[8])) {
+            winner = board[2]
+        }
+
+        if(checkForThree(board[0], board[4], board[8])) {
+            winner = board[0]
+        }
+
+        if(checkForThree(board[2], board[4], board[6])) {
+            winner = board[2]
+        }
+
+        let openSpots = 0;
+
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] == '') {
+                openSpots++;
             }
         }
 
-        return open
+        if (winner == null && openSpots == 0) {
+            return 'tie';
+        } else {
+            return winner;
+        }
+    }
+
+    const bestMove = () => {
+        let bestScore = -Infinity
+        let move
+
+        let board = gameBoard.gameboard
+
+        for(let i = 0; i < board.length; i++) {
+            if(board[i] == "") {
+                board[i] = PLAYER_X
+                let score = minimax(board, 0, false)
+                board[i] = ""
+                if(score > bestScore) {
+                    bestScore = score
+                    move = {i}
+                }
+            }
+        }
+
+        board[move.i] = PLAYER_X
+        cellElements[move.i].classList.add(PLAYER_X)
+        swapTurns()
+    }
+
+    let scores = {
+        x: 1,
+        circle: -1,
+        tie: 0
+    }
+
+    const minimax = (board, depth, isMaximizing) => {
+        let result = boardWinner()
+
+        if(result !== null) {
+            return scores[result]
+        }
+
+        if(isMaximizing) {
+            let bestScore = -Infinity
+
+            for(let i = 0; i < board.length; i++) {
+                if(board[i] == "") {
+                    board[i] = PLAYER_X
+                    let score = minimax(board, depth - 1, false)
+                    board[i] = ""
+                    bestScore = Math.max(score, bestScore)
+                }
+            }
+
+            return bestScore
+        } else {
+            let bestScore = Infinity
+
+            for(let i = 0; i < board.length; i++) {
+                if(board[i] == "") {
+                    board[i] = PLAYER_O
+                    let score = minimax(board, depth - 1, true)
+                    board[i] = ""
+                    bestScore = Math.min(score, bestScore)
+                }
+            }
+
+            return bestScore
+        }
     }
 
     const placeMarker = (cell, currentPlayer) => {
-        
-        
-        cell.classList.add(currentPlayer)
+
+        let board = gameBoard.gameboard
 
         const index = cell.dataset.key
-        gameBoard.gameboard[index] = currentPlayer
+        board[index] = currentPlayer
+        cell.classList.add(currentPlayer)
     }
 
     const swapTurns = () => {
-        circleTurn = !circleTurn
+        xTurn = !xTurn
     }
 
     const setBoardHoverClass = () => {
         doc.getElementById('board').classList.remove(PLAYER_X)
         doc.getElementById('board').classList.remove(PLAYER_O)
 
-        if(circleTurn) {
-            board.classList.add(PLAYER_O)
-        } else {
+        if(xTurn) {
             board.classList.add(PLAYER_X)
+        } else {
+            board.classList.add(PLAYER_O)
         }
     }
 
     const clickHandler = (e) => {
         const cell = e.target
-        const currentPlayer = circleTurn ? PLAYER_O : PLAYER_X
+        const currentPlayer = xTurn ? PLAYER_X : PLAYER_O
+
         placeMarker(cell, currentPlayer)
 
-        openSpots()
+        bestMove()
 
         if(checkWinner(currentPlayer)) {
             endGame(false)
@@ -106,7 +228,7 @@ const MakeMove = (function(doc, gameBoard, winning) {
         if(draw) {
             winningMessageTextElement.innerText = "Draw!"
         } else {
-            winningMessageTextElement.innerText = `${circleTurn ? "O" : "X"} Wins!`
+            winningMessageTextElement.innerText = `${xTurn ? "O" : "X"} Wins!`
         }
 
         winningMessageElement.classList.add('show')
@@ -119,7 +241,7 @@ const MakeMove = (function(doc, gameBoard, winning) {
     }
 
     const startGame = () => {
-        circleTurn = false
+        xTurn = true
 
         cellElements.forEach(cell => {
             cell.classList.remove(PLAYER_X)
@@ -128,12 +250,15 @@ const MakeMove = (function(doc, gameBoard, winning) {
             cell.addEventListener('click', clickHandler, { once: true })
         })
 
+        bestMove()
+
         setBoardHoverClass()
         winningMessageElement.classList.remove('show')
-
     }
 
     startGame()
+
+    
 
     restartButton.addEventListener('click', startGame)
 }(document, GameBoard, WinningCombos))
