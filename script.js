@@ -11,27 +11,8 @@ const GameBoard = (function() {
 
 }())
 
-const WinningCombos = (function() {
-    const combos = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
 
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-
-        [0, 4, 8],
-        [2, 4, 6],
-    ]
-
-    return {
-        combos
-    }
-}())
-
-
-const MakeMove = (function(doc, gameBoard, winning) {
+const Game = (function(doc, gameBoard) {
     const PLAYER_X = 'x'
     const PLAYER_O = 'circle'
     const cellElements = doc.querySelectorAll('[data-cell]')
@@ -57,7 +38,7 @@ const MakeMove = (function(doc, gameBoard, winning) {
         return a == b && b == c && a != ''
     }
 
-    const boardWinner = () => {
+    const checkWinner = () => {
         let winner = null
 
         let board = gameBoard.gameboard
@@ -139,7 +120,7 @@ const MakeMove = (function(doc, gameBoard, winning) {
     }
 
     const minimax = (board, depth, isMaximizing) => {
-        let result = boardWinner()
+        let result = checkWinner()
 
         if(result !== null) {
             return scores[result]
@@ -206,42 +187,35 @@ const MakeMove = (function(doc, gameBoard, winning) {
 
         bestMove()
 
-        if(checkWinner(currentPlayer)) {
-            endGame(false)
-        } else if(isDraw()) {
-            endGame(true)
-        } else {
-            swapTurns()
-            setBoardHoverClass()
-        }
-    }
+        let winner = checkWinner()
 
-    const checkWinner = (currentPlayer) => {
-        return winning.combos.some(combination => {
-            return combination.every(index => {
-                return cellElements[index].classList.contains(currentPlayer)
-            })
-        })
-    }
+        if(winner !== null) {
+            if(winner == PLAYER_X) {
+                winningMessageTextElement.innerText = `${PLAYER_X.toUpperCase()} Wins!`
+            }
 
-    const endGame = (draw) => {
-        if(draw) {
-            winningMessageTextElement.innerText = "Draw!"
-        } else {
-            winningMessageTextElement.innerText = `${xTurn ? "O" : "X"} Wins!`
+            if(winner == PLAYER_O) {
+                winningMessageTextElement.innerText = `${PLAYER_O.toUpperCase()} Wins!`
+            }
+
+            if(winner == 'tie') {
+                winningMessageTextElement.innerText = "Draw!"
+            }
+
+            winningMessageElement.classList.add('show')
         }
 
-        winningMessageElement.classList.add('show')
-    }
-
-    const isDraw = () => {
-        return [...cellElements].every(cell => {
-            return cell.classList.contains(PLAYER_X) || cell.classList.contains(PLAYER_O)
-        })
+        swapTurns()
     }
 
     const startGame = () => {
         xTurn = true
+
+        let board = gameBoard.gameboard
+
+        for(let i = 0; i < board.length; i++) {
+            board[i] = ""
+        }
 
         cellElements.forEach(cell => {
             cell.classList.remove(PLAYER_X)
@@ -258,7 +232,5 @@ const MakeMove = (function(doc, gameBoard, winning) {
 
     startGame()
 
-    
-
     restartButton.addEventListener('click', startGame)
-}(document, GameBoard, WinningCombos))
+}(document, GameBoard))
