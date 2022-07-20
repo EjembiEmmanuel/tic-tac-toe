@@ -22,18 +22,6 @@ const Game = (function(doc, gameBoard) {
     const restartButton = doc.getElementById('restart-button')
     let xTurn
 
-    // const openSpots = () => {
-    //     let open = []
-
-    //     for(let i = 0; i < gameBoard.gameboard.length; i++) {
-    //         if(gameBoard.gameboard[i] == "") {
-    //             open.push(i)
-    //         }
-    //     }
-
-    //     return open
-    // }
-
     const checkForThree = (a, b, c) => {
         return a == b && b == c && a != ''
     }
